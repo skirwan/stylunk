@@ -60,9 +60,8 @@ body {
   list-style: none;
   margin:0;
   padding:0;
-  display:flex;
-  flex-wrap: wrap;
-  justify-content: flex-start;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 1px minmax(100px, 1fr));
   gap: 10px;
   margin:10px;
   margin-top:15px;
@@ -70,23 +69,19 @@ body {
 
 .optionsList > li {
   list-style: none;
-  flex-basis: calc(33% - 6px);
-  margin:0;
-  padding:0;
+  grid-column: auto / span 2;
   min-height:85px;
 }
 
-li.category {
-  flex-basis:4px;
-  flex-grow:0;
-  width: 4px;
+.optionsList > li.category {
+  grid-column: auto / span 1;
   position:relative;
   left:5px;
   border-right: 1px solid #566963;
 }
 
 li.category + li {
-  flex-basis: calc(33% - 21px);
+  grid-column: auto / span 1;
 }
 
 li.category > h4 {
@@ -96,7 +91,7 @@ li.category > h4 {
   font-size: 10px;
   text-transform: uppercase;
   position: absolute;
-  left: 5px;
+  left: 100%;
   bottom: 0px;
   transform: rotate(-90deg);
   transform-origin: bottom left;
@@ -225,45 +220,6 @@ details {
   display:block;
 }
 
-@media screen and (orientation: landscape) and (min-width: 900px) {
-  .optionsList > li:not(.category) {
-    flex-basis: calc(25% - 8px);
-  }
-  
-  li.category + li:not(.category) {
-    flex-basis: calc(25% - 26px);
-  }
-}
-
-@media screen and (orientation: landscape) and (min-width: 1100px) {
-  .optionsList > li:not(.category) {
-    flex-basis: calc(20% - 8px);
-  }
-  
-  li.category + li:not(.category) {
-    flex-basis: calc(20% - 24px);
-  }
-}
-
-@media screen and (orientation: landscape) and (min-width: 1400px) {
-  .optionsList > li:not(.category) {
-    flex-basis: calc(16.667% - 9px);
-  }
-  
-  li.category + li:not(.category) {
-    flex-basis: calc(16.667% - 24.5px);
-  }
-}
-
-@media screen and (orientation: landscape) and (min-width: 1700px) {
-  .optionsList > li:not(.category) {
-    flex-basis: calc(12.5% - 9px);
-  }
-  
-  li.category + li:not(.category) {
-    flex-basis: calc(12.5% - 24.5px);
-  }
-}
 
 @media screen and (orientation: landscape) and (min-height: 768px) {
   .previewPanel .iconWrapper {
