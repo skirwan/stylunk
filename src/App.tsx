@@ -7,7 +7,6 @@ import { CharacterAppearance } from './CLStyleLib/CharacterAppearance';
 import { IconChooser } from './IconChooser';
 import { PosePanel } from './Pose';
 import { Icon } from './ReactComponents/Icon';
-import { IntInput } from './ReactComponents/IntInput';
 
 export function capitalize(s: string): string {
   return s.split(' ').map((s) => { return s[0].toUpperCase() + s.substring(1) }).join(' ')

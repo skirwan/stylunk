@@ -1,7 +1,7 @@
 import { Component } from 'react';
 import { capitalize } from './App';
 import { StylunkContext } from './AppState';
-import { CharacterAppearance, differentAppearance, sameAppearance } from './CLStyleLib/CharacterAppearance';
+import { CharacterAppearance, differentAppearance } from './CLStyleLib/CharacterAppearance';
 import { CharIcon, icons } from './CLStyleLib/CharIcon';
 import { Icon } from './ReactComponents/Icon';
 
