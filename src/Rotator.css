@@ -1,0 +1,25 @@
+.rotator {
+    box-sizing: border-box;
+    width: 80px;
+    height:80px;
+    border-radius: 80px;
+    border:1px solid #566963;
+    box-shadow:inset 0px 1px #91b8b3;
+    background:linear-gradient(#768d87, #6c7c7c);
+    user-select: none;
+    cursor:pointer;
+    text-align: center;
+    line-height: 85px;
+  }
+  
+  .rotator .thumb {
+    display: inline-block;
+    width: 20px;
+    height:20px;
+    border-radius: 20px;
+    box-shadow: inset 0px -1px #91b8b3, inset 0px 1px #91b8b3;
+    background: linear-gradient(black, #91b8b3);
+    opacity: 0.4;
+    user-select: none;
+    will-change: transform;
+  }

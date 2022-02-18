@@ -1,6 +1,6 @@
-import { Berries } from "../clstyles/dyebleach";
-import { differentItemColors } from "../clstyles/item";
-import { makeShirt } from "../clstyles/shirt";
+import { Berries } from "../CLData/Berries";
+import { differentItemColors } from "../CLStyleLib/Item";
+import { makeShirt } from "../CLStyleLib/Shirt";
 
 test('basic dye logic santiy', () => {
     let blueShirt = makeShirt('Blue', '224', '113', '002');
@@ -10,5 +10,5 @@ test('basic dye logic santiy', () => {
     let q2 = blueShirt.applying(Berries.bramble.bleach, Berries.bramble.bleach, Berries.orga.dye, Berries.bramble.dye, Berries.orga.dye, Berries.bramble.dye, Berries.lila.dye);
     
     expect(q.toString()).not.toStrictEqual(q2.toString());
-    expect(differentItemColors(q, q2)).toBeFalsy();
+    expect(differentItemColors(q.colors, q2.colors)).toBeFalsy();
 });

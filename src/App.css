@@ -1,38 +1,345 @@
+html,
+body {
+  height: 100%;
+  width: 100%;
+  overflow: auto;
+  background: #eeeeee;
+}
+
 .App {
+  padding: 10px;
+}
+
+.icon {
+}
+
+.previewPanel {
+  height: 300px;
   text-align: center;
+  line-height: 330px;
+  background: linear-gradient(rgba(118,141,135,0.75), rgba(108,124,124,0.75));
+  border-bottom:1px solid #768d87;
+  box-shadow: inset 0 -1px #91b8b3;
+  position: fixed;
+  left:0;
+  top:0;
+  right:0;
+  z-index: 1;
+  backdrop-filter: blur(10px);
+  display:flex;
+  align-items: stretch;
+  user-select: none;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.previewPanel .iconWrapper {
+  flex-basis: 300px;
+  flex-grow:1;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.previewPanel .iconWrapper .icon {
+  transform: scale(8);
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.previewPanel .posePanel {
+  width: 100px;
+  background: #555555;
+  flex-grow: 0;
+  padding:10px;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.posePanel .rotator {
+  margin:10px;
+}
+.previewPanel + * {
+  margin-top:310px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.optionsList {
+  list-style: none;
+  margin:0;
+  padding:0;
+  display:flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: 10px;
+  margin:10px;
+  margin-top:15px;
+}
+
+.optionsList > li {
+  list-style: none;
+  flex-basis: calc(33% - 6px);
+  margin:0;
+  padding:0;
+  min-height:85px;
+}
+
+li.category {
+  flex-basis:4px;
+  flex-grow:0;
+  width: 4px;
+  position:relative;
+  left:5px;
+  border-right: 1px solid #566963;
+}
+
+li.category + li {
+  flex-basis: calc(33% - 21px);
+}
+
+li.category > h4 {
+  margin: 0;
+  padding: 0;
+  font-weight: normal;
+  font-size: 10px;
+  text-transform: uppercase;
+  position: absolute;
+  left: 5px;
+  bottom: 0px;
+  transform: rotate(-90deg);
+  transform-origin: bottom left;
+  display: block;
+  color: #566963;
+}
+
+button {
+  color:#fff;
+  border:1px solid #566963;
+  border-radius:3px;
+  box-shadow:inset 0px 1px #91b8b3;
+  text-shadow: 0px -1px 0px #2b665e;
+  background:linear-gradient(#768d87, #6c7c7c);
+  padding: 7px;
+  min-width: 70px;
+  user-select: none;
+  height: 35px;
+}
+
+button:hover:not(:disabled) {
+  background: linear-gradient(#6c7c7c, #768d87);
+}
+
+button:disabled,
+button.disabled {
+  opacity: 0.5;
+}
+
+button.active,
+button.active:hover,
+button:active:not(:disabled) {
+  background: #333333;
+}
+
+.buttonGroup {
+  line-height: 1;
+  width: 100%;
+  display:flex;
+  flex-direction: column;
+  margin-bottom:10px;
+}
+
+.buttonGroup button {
+  border-radius: 0;
+  border-top-width: 0;
+  height: 35px;
+}
+
+.buttonGroup button:first-child {
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+  margin-top:0;
+  border-top-width: 1px;
+}
+
+.buttonGroup button:last-child {
+  border-bottom-left-radius: 3px;
+  border-bottom-right-radius: 3px;
+}
+
+.optionsList > li > button {
+  width: 100%;
+  height:100%;
+}
+
+.optionsList > li > button .icon {
+  margin-top:10px;
+  transform: scale(1.5);
+}
+
+.optionsList > li > button > span {
+  display: block;
+  margin-top: 10px;
+}
+
+summary {
+  line-height: 2;
+  cursor:pointer;
+  padding:0 10px;
+  font-weight: bold;
+}
+
+summary .currentSelection {
+  font-weight: normal;
+}
+
+summary .currentSelection span {
+  margin-left:5px;
+}
+
+details {
+  border: 1px solid #566963;
+  margin-bottom: 10px;
+  border-radius: 4px;
+}
+
+.berryGrid {
+  box-sizing: border-box;
+  width:100%;
+  display: flex;
+  gap: 10px;
+  padding:10px;
+  flex-direction: column;
+}
+
+.berryGrid > .berry {
+  width:100%;
+  display: flex;
+  gap: 10px;
+}
+
+.berryGrid > .berry > button {
+  flex: calc(50% - 10px);
+  padding: 3px;
+  min-height: 85px;
+}
+
+.berryGrid > .berry > button .icon {
+  margin-top:10px;
+  transform: scale(1.5);
+}
+
+.berryGrid > .berry > button > span {
+  margin-top:10px;
+  display:block;
+}
+
+@media screen and (orientation: landscape) and (min-width: 900px) {
+  .optionsList > li:not(.category) {
+    flex-basis: calc(25% - 8px);
   }
-  to {
-    transform: rotate(360deg);
+  
+  li.category + li:not(.category) {
+    flex-basis: calc(25% - 26px);
+  }
+}
+
+@media screen and (orientation: landscape) and (min-width: 1100px) {
+  .optionsList > li:not(.category) {
+    flex-basis: calc(20% - 8px);
+  }
+  
+  li.category + li:not(.category) {
+    flex-basis: calc(20% - 24px);
+  }
+}
+
+@media screen and (orientation: landscape) and (min-width: 1400px) {
+  .optionsList > li:not(.category) {
+    flex-basis: calc(16.667% - 9px);
+  }
+  
+  li.category + li:not(.category) {
+    flex-basis: calc(16.667% - 24.5px);
+  }
+}
+
+@media screen and (orientation: landscape) and (min-width: 1700px) {
+  .optionsList > li:not(.category) {
+    flex-basis: calc(12.5% - 9px);
+  }
+  
+  li.category + li:not(.category) {
+    flex-basis: calc(12.5% - 24.5px);
+  }
+}
+
+@media screen and (orientation: landscape) and (min-height: 768px) {
+  .previewPanel .iconWrapper {
+    flex-grow: 0;
+  }
+
+  .previewPanel .posePanel {
+    flex-grow: 10;
+  }
+}
+@media screen and (orientation: landscape) {
+  .App {
+    padding-left: 310px;
+  }
+  .previewPanel {
+    right:unset;
+    height:unset;
+    left:0;
+    top:0;
+    bottom:0;
+    width:300px;
+    flex-direction: column;
+  }
+
+  .previewPanel .posePanel {
+    width:unset;
+    display:block;
+  }
+
+  .previewPanel + * {
+    margin-top: 0;
+  }
+
+  .posePanel .rotator {
+    width:80px;
+    float: left;
+    margin: 0;
+  }
+
+  .buttonGroup {
+    float: left;
+    margin-left:10px;
+    width: calc(100% - 90px);
+    flex-direction: row;
+  }
+
+  .buttonGroup button {
+    flex:1;
+    border-top-width: 1px;
+    border-left-width: 0;
+    padding-left: 0;
+    padding-right: 0;
+    width: unset;
+    min-width: unset;
+  }
+
+  .buttonGroup button:first-child {
+    border-top-left-radius: 3px;
+    border-top-right-radius: 0;
+    border-bottom-left-radius: 3px;
+    margin-top:0;
+    border-left-width: 1px;
+  }
+  
+  .buttonGroup button:last-child {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 3px;
+    border-top-right-radius: 3px;
+  }
+
+  .posePanel > button {
+    float: left;
+    margin-left: 10px;
+    padding-left: 0;
+    padding-right: 0;
+    line-height: 1;
+    width: calc(100% - 90px);
   }
 }

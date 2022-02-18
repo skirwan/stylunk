@@ -1,5 +1,6 @@
-import { Color, Palette, ColorString, makeColor } from "./color";
-import { Item, ItemAttributes, ItemColor } from "./item";
+import { Color, ColorString, makeColor } from "./Color";
+import { Item, ItemAttributes, ItemColor } from "./Item";
+import { ClothesIndices } from "./Palette";
 
 class Shirt extends Item {
 	constructor(
@@ -10,9 +11,9 @@ class Shirt extends Item {
         attributes: ItemAttributes = {}
 	) {
         super(name, [], [
-            new ItemColor(Palette.indexShirtLight, "light", light), 
-            new ItemColor(Palette.indexShirtMid, "mid", mid), 
-            new ItemColor(Palette.indexShirtDark, "dark", dark),
+            new ItemColor(ClothesIndices.indexShirtLight, "light", light), 
+            new ItemColor(ClothesIndices.indexShirtMid, "mid", mid), 
+            new ItemColor(ClothesIndices.indexShirtDark, "dark", dark),
         ], attributes);
 	}
 }

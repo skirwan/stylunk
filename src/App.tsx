@@ -1,51 +1,53 @@
-import React from 'react';
-import logo from './logo.svg';
+import { Component, useState } from 'react';
 import './App.css';
+import { AppState, InitState, StylunkContext } from './AppState';
+import { ChoiceSet } from './ChoiceSet';
+import { ItemSlots } from './CLData/Clothes/Wardrobe';
+import { CharacterAppearance } from './CLStyleLib/CharacterAppearance';
+import { IconChooser } from './IconChooser';
+import { PosePanel } from './Pose';
+import { Icon } from './ReactComponents/Icon';
+import { IntInput } from './ReactComponents/IntInput';
 
+export function capitalize(s: string): string {
+  return s.split(' ').map((s) => { return s[0].toUpperCase() + s.substring(1) }).join(' ')
+}
 
-/*
-Copy classic palette
-Iterate through items, overriding it
-
-Allocate Uint8ClampedArray of pixel data (size * 4) and expand icon x overridden palette into it
-
-new ImageData() from that
-
-Each button with a preview is doing the same thing; but when clicking a button, the state change should include the new image
-
-
-<SLButton currentAppearance={foo} onApplyButton={ (item, slot, computedImage) => void } item={item} slot={slot}
-
-<SLApp>
-    <PreviewPanel computedImage={} visiblePose={} />
-    <PoserPanel visiblePose={} onApplyPose={(pose) => void} />
-    <Panel label="Icon" summary={describeIcon()}>
-        
-    </Panel>
-    { customizationPoints.map( x => Section(x) ) }
-</SLApp>
-
-*/
 
 function App() {
+  let realSetAppearance: (newAppearance: CharacterAppearance) => void;
+  let setAppearance = (newAppearance: CharacterAppearance): void => { realSetAppearance(newAppearance) };
+  let [pose, setPose] = useState<[number, number]>([8, 0]);
+
+  let [state, setState] = useState<AppState>(() => {
+    return { ...InitState(), setAppearance };
+  });
+
+  realSetAppearance = (newAppearance: CharacterAppearance) => {
+    setState((oldState) => {
+      return { ...oldState, appearance: newAppearance };
+    });
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <StylunkContext.Provider value={state}>
+      <div className="App">
+        <div className="previewPanel">
+          <Icon appearance={state.appearance} pose={pose} />
+          <PosePanel pose={pose} setPose={setPose}></PosePanel>
+        </div>
+        <IconChooser appearance={state.appearance}></IconChooser>
+        <CustomizationPanel></CustomizationPanel>
+      </div>
+    </StylunkContext.Provider>
   );
 }
 
 export default App;
+
+class CustomizationPanel extends Component {
+  override shouldComponentUpdate(): boolean { return false; }
+  override render() {
+    return ItemSlots.map(slot => <ChoiceSet key={slot} slot={slot}></ChoiceSet>)
+  }
+}
