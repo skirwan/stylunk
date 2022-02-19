@@ -44,8 +44,8 @@ export class Rotator extends Component<RotatorProps> {
 
         const midX = this.elementRef.current.offsetLeft + this.elementRef.current.offsetWidth / 2;
         const midY = this.elementRef.current.offsetTop + this.elementRef.current.offsetHeight / 2;
-        const relX = evt.pageX - midX;
-        const relY = evt.pageY - midY;
+        const relX = evt.clientX - midX;
+        const relY = evt.clientY - midY;
 
         if (relY === 0) {
             if (relX < 0) return 270;
