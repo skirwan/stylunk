@@ -1,5 +1,5 @@
 import { Color, makeColor } from "../../CLStyleLib/Color";
-import { Item, ItemColor } from "../../CLStyleLib/Item";
+import { Item, ItemAttributes, ItemColor } from "../../CLStyleLib/Item";
 import { ClothesIndices, OrderedClothesIndices } from "../../CLStyleLib/Palette";
 import { makeShirt } from "../../CLStyleLib/Shirt";
 
@@ -8,7 +8,7 @@ export const ItemSlots: Array<ItemSlot> = ['underwear', 'weapon', 'skin', 'hair'
 export type ItemCategory = { category: string, items: Array<Item> }
 export type SlotOptions = Array<Item> | Array<ItemCategory>;
 
-function makeItem(name: string, values: Partial<Record<keyof typeof ClothesIndices, Color>>): Item {
+function makeItem(name: string, values: Partial<Record<keyof typeof ClothesIndices, Color>>, attributes: ItemAttributes = {}): Item {
     return new Item(
         name,
         [],
@@ -18,7 +18,8 @@ function makeItem(name: string, values: Partial<Record<keyof typeof ClothesIndic
             } else {
                 return [];
             }
-        })
+        }),
+        attributes,
     );
 }
 
@@ -316,110 +317,123 @@ export const Wardrobe: Record<ItemSlot, SlotOptions> = {
             indexSkinLight: makeColor([153, 153, 102]),
         }),
     ],
-    'shoes': [],
-    'belt': [],
-    'shirt': [
-        {
-            category: 'General',
-            items: [
-                makeShirt('Tan', '543', '432', '321'),
-                makeShirt('Blue', '224', '113', '002'),
-                makeShirt('Gray', '333', '222', '111'),
-                makeShirt('Muddy Forest', '320', '220', '211'),
-                makeShirt('Forest Green', '030', '020', '010'),
-                makeShirt('Grassy Green', '253', '142', '031'),
-                makeShirt('Grey', '333', '222', '111'),
-                makeShirt('Muddy Yellow', '320', '442', '320'),
-                makeShirt('Albino Maha Fur', '222', '333', '444'),
-                makeShirt('Puma Skin', '333', '111', '000'),
-                makeShirt('Purple', '314', '203', '102'),
-                makeShirt('Silk', '554', '544', '433'),
-                makeShirt('Mountain Goat', '544', '432', '222'),
-                makeShirt('Woodland Green', '242', '321', '120'),
-            ]
-        }, {
-            category: 'Historical',
-            items: [
-                makeShirt('Gold', '552', '541', '430'),
-                makeShirt('Newbie Orange', '543', '532', '421'),
-            ]
-        }, {
-            category: 'Healer',
-            items: [
-                makeShirt('White', '455', '444', '445'),
-                makeShirt('Turquoise (3rd•)', '355', '243', '122'),
-                makeShirt('Sea Wheat (5th•)', '542', '143', '125'),
-                makeShirt('Mossy Lavender (7th•)', '042', '325', '105'),
-            ]
-        }, {
-            category: 'Carnival',
-            items: [
-                makeShirt('Ice Blue', '145', '125', '004'),
-                makeShirt('Bright Green', '551', '241', '030'),
-                makeShirt('Bright Sunrise', '541', '530', '400'),
-                makeShirt('Bright Sunset', '532', '412', '102'),
-                makeShirt('Thundercloud', '234', '111', '001'),
-                makeShirt('Bubblegum', '544', '525', '202'),
-                makeShirt('Campfire', '300', '420', '540'),
-            ]
-        }
-        /*
-        var shirt = [
-{
-    name: 'Bloodshroud',
-	category: 'Special',
-	cloakOnly: true,
-	locked: true,
-    colors: {
-        182: [153, 51, 51],
-        195: [102, 0, 0],
-        202: [51, 0, 0],
-    }
-},
-{
-    name: 'Lava Cloak',
-	category: 'Special',
-	cloakOnly: true,
-	locked: true,
-    colors: {
-        182: [204, 102, 51],
-        195: [153, 51, 0],
-        202: [102, 0, 0],
-    }
-},
-{
-    name: 'Red Team',
-	category: 'Special',
-	locked: true,
-    colors: {
-        182: [255, 0, 0],
-        195: [204, 51, 51],
-        202: [153, 0, 0],
-    }
-},
-{
-    name: 'Blue Team',
-	category: 'Special',
-	locked: true,
-    colors: {
-        182: [0, 0, 255],
-        195: [51, 51, 204],
-        202: [0, 0, 153],
-    }
-},
-{
-    name: 'Yellow Team',
-	category: 'Special',
-	locked: true,
-    colors: {
-        182: [255, 255, 51],
-        195: [204, 204, 51],
-        202: [153, 153, 0],
-    }
-},
-]
-        */
+    'shoes': [
+        makeItem('Pink Slippers', { indexShoes: makeColor([204, 102, 153]) }),
+        makeItem('Dark Brown Scuffs', { indexShoes: makeColor([102, 51, 51]) }),
+        makeItem('Brown Loafers', { indexShoes: makeColor([153, 102, 51]) }),
+        makeItem('Glossy White Flats', { indexShoes: makeColor([204, 204, 204]) }),
+        makeItem('White Sneakers', { indexShoes: makeColor([153, 204, 204]) }),
+        makeItem('Black Riding Boots', { indexShoes: makeColor([0, 0, 51]) }),
+        makeItem('Grey Cowboy Boots', { indexShoes: makeColor([102, 102, 102]) }),
+        makeItem('Turquoise Slides', { indexShoes: makeColor([102, 204, 153]) }),
+        makeItem('Forest Green Huaraches', { indexShoes: makeColor([51, 102, 51]) }),
+        makeItem('Burnt Leather Espadrilles', { indexShoes: makeColor([204, 102, 51]) }),
+        makeItem('Orange Moccasins', { indexShoes: makeColor([255, 153, 0]) }),
+        makeItem('Red Pumps', { indexShoes: makeColor([204, 51, 51]) }),
+        makeItem('Blue Oxfords', { indexShoes: makeColor([0, 102, 204]) }),
+        makeItem('Green Clogs', { indexShoes: makeColor([0, 153, 51]) }),
+        makeItem('Purple Sandals', { indexShoes: makeColor([153, 0, 204]) }),
+        makeItem('Gold Wing Tips', { indexShoes: makeColor([204, 153, 51]) }),
     ],
+    'belt': [
+        makeItem('Bard', {
+            indexBeltLight: makeColor([255, 204, 102]),
+            indexBeltDark: makeColor([255, 204, 51]),
+        }),
+        makeItem('Artisan', {
+            indexBeltLight: makeColor([255, 153, 51]),
+            indexBeltDark: makeColor([255, 102, 0]),
+        }),
+        makeItem('3rd• Fighter', {
+            indexBeltLight: makeColor([204, 255, 255]),
+            indexBeltDark: makeColor([204, 204, 255]),
+        }),
+        makeItem('4th• Fighter', {
+            indexBeltLight: makeColor([0, 0, 51]),
+            indexBeltDark: makeColor([0, 0, 0]),
+        }),
+        makeItem('5th• Fighter', {
+            indexBeltLight: makeColor([153, 0, 0]),
+            indexBeltDark: makeColor([102, 0, 0]),
+        }),
+        makeItem('6th• Fighter', {
+            indexBeltLight: makeColor([0, 51, 204]),
+            indexBeltDark: makeColor([0, 0, 153]),
+        }),
+        makeItem('7th• Fighter', {
+            indexBeltLight: makeColor([102, 102, 102]),
+            indexBeltDark: makeColor([153, 153, 153]),
+        }),
+        makeItem('Belt of the Wild', {
+            indexBeltLight: makeColor([204, 51, 0]),
+            indexBeltDark: makeColor([153, 51, 0]),
+        }),
+        makeItem('Stonegirdle', {
+            indexBeltLight: makeColor([153, 153, 153]),
+            indexBeltDark: makeColor([51, 51, 51]),
+        }),
+        makeItem('Moonless Sky', {
+            indexBeltLight: makeColor([102, 102, 204]),
+            indexBeltDark: makeColor([51, 51, 153]),
+        }),
+        makeItem('Full Moon', {
+            indexBeltLight: makeColor([255, 255, 204]),
+            indexBeltDark: makeColor([255, 204, 204]),
+        }),
+    ],
+    'shirt': [{
+        category: 'General',
+        items: [
+            makeShirt('Tan', '543', '432', '321'),
+            makeShirt('Blue', '224', '113', '002'),
+            makeShirt('Gray', '333', '222', '111'),
+            makeShirt('Muddy Forest', '320', '220', '211'),
+            makeShirt('Forest Green', '030', '020', '010'),
+            makeShirt('Grassy Green', '253', '142', '031'),
+            makeShirt('Grey', '333', '222', '111'),
+            makeShirt('Muddy Yellow', '320', '442', '320'),
+            makeShirt('Albino Maha Fur', '222', '333', '444'),
+            makeShirt('Puma Skin', '333', '111', '000'),
+            makeShirt('Purple', '314', '203', '102'),
+            makeShirt('Silk', '554', '544', '433'),
+            makeShirt('Mountain Goat', '544', '432', '222'),
+            makeShirt('Woodland Green', '242', '321', '120'),
+        ]
+    }, {
+        category: 'Historical',
+        items: [
+            makeShirt('Gold', '552', '541', '430'),
+            makeShirt('Newbie Orange', '543', '532', '421'),
+        ]
+    }, {
+        category: 'Healer',
+        items: [
+            makeShirt('White', '455', '444', '445'),
+            makeShirt('Turquoise (3rd•)', '355', '243', '122'),
+            makeShirt('Sea Wheat (5th•)', '542', '143', '125'),
+            makeShirt('Mossy Lavender (7th•)', '042', '325', '105'),
+        ]
+    }, {
+        category: 'Carnival',
+        items: [
+            makeShirt('Ice Blue', '145', '125', '004'),
+            makeShirt('Bright Green', '551', '241', '030'),
+            makeShirt('Bright Sunrise', '541', '530', '400'),
+            makeShirt('Bright Sunset', '532', '412', '102'),
+            makeShirt('Thundercloud', '234', '111', '001'),
+            makeShirt('Bubblegum', '544', '525', '202'),
+            makeShirt('Campfire', '300', '420', '540'),
+        ]
+    }, {
+        category: 'Special',
+        items: [
+            makeShirt('Bloodshroud', '311', '200', '100', { lockCloak: true, lockedColors: true }),
+            makeShirt('Lava Cloak', '421', '310', '200', { lockCloak: true, lockedColors: true }),
+            makeShirt('Red Team', '500', '411', '300', { lockedColors: true, lockNotCloak: true }),
+            makeShirt('Blue Team', '005', '114', '003', { lockedColors: true, lockNotCloak: true }),
+            makeShirt('Yellow Team', '551', '441', '330', { lockedColors: true, lockNotCloak: true }),
+        ]
+    }],
     'pants': [],
 };
 

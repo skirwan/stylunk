@@ -18,6 +18,6 @@ class Shirt extends Item {
 	}
 }
 
-export function makeShirt(name: string, light: ColorString, mid: ColorString, dark: ColorString): Item {
-    return new Shirt(name + ' Shirt', makeColor(light), makeColor(mid), makeColor(dark));
+export function makeShirt(name: string, light: ColorString, mid: ColorString, dark: ColorString, attributes: ItemAttributes = {}): Item {
+    return new Shirt(name, makeColor(light), makeColor(mid), makeColor(dark), attributes);
 }
