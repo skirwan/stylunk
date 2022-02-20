@@ -1,4 +1,4 @@
-import { CharIcon, SkipChunk, DataChunk } from "./CharIcon";
+import { CharIcon, SkipChunk, PixelChunk } from "./CharIcon";
 import { Palette } from "./Palette";
 
 export class ImageDataCache {
@@ -38,11 +38,11 @@ export class ImageDataCache {
   
       let pixelIndex = 0;
       for (const chunk of icon.pixelData) {
-        let skip = (chunk as SkipChunk).skip;
-        if (skip) {
-          pixelIndex += skip;
+        if (isSkipChunk(chunk)) {
+          pixelIndex += chunk.skip;
         } else {
-          const binaryString = window.atob((chunk as DataChunk).data)
+          const binaryString = chunk.binaryData ?? (chunk.binaryData = window.atob(chunk.data));
+
           for (let i = 0; i < binaryString.length; i++) {
             let paletteIndex = binaryString.charCodeAt(i);
             let colorIndex = palette[paletteIndex];
@@ -55,3 +55,7 @@ export class ImageDataCache {
       return new ImageData(new Uint8ClampedArray(pixelBuffer), icon.cellWidth * 16, icon.cellHeight * 3 + 1);
     }
   }
+
+function isSkipChunk(chunk: PixelChunk): chunk is SkipChunk {
+  return !!(chunk as SkipChunk).skip;
+}

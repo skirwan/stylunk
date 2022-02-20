@@ -1,5 +1,4 @@
 import { Component } from "react";
-import { StylunkContext } from "./AppState";
 import { Rotator } from "./Rotator";
 
 export type Pose = [number, number];
@@ -71,9 +70,6 @@ interface PosePanelState {
 }
 
 export class PosePanel extends Component<PosePanelProps, PosePanelState> {
-    static contextType = StylunkContext
-    context!: React.ContextType<typeof StylunkContext>;
-
     private interval?: number;
 
     constructor(props: PosePanelProps) {

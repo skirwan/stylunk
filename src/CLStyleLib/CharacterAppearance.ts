@@ -1,6 +1,6 @@
 import { ItemSlot, ItemSlots } from "../CLData/Clothes/Wardrobe";
 import { CharIcon } from "./CharIcon";
-import { ColorManipulator, Item } from "./Item";
+import { ColorManipulator, differentItemColors, Item } from "./Item";
 import { Palette } from "./Palette";
 
 export class CharacterAppearance {
@@ -42,27 +42,20 @@ export class CharacterAppearance {
     }
 }
 
-export function sameAppearance(a: CharacterAppearance, b: CharacterAppearance): boolean {
-    if (a.palette.length !== b.palette.length) { return false }
+// This can't be done by comparing pixel data, because a tan shirt and 'no shirt' look identical but are distinct.
+export function differentAppearance(a: CharacterAppearance, b: CharacterAppearance, ignoringSlot: ItemSlot | undefined = undefined): boolean {
+    if (a.icon !== b.icon) { return true; }
+    for (const slot of ItemSlots) {
+        if (ignoringSlot && ignoringSlot === slot) { continue }
+        const itemA = a.wornItems[slot];
+        const itemB = b.wornItems[slot];
 
-    let aWindow = new Uint32Array(a.palette.buffer);
-    let bWindow = new Uint32Array(b.palette.buffer);
-
-    for (let i = 0; i < aWindow.length; i++) {
-        if (aWindow[i] !== bWindow[i]) return false;
-    }
-
-    return true;
-}
-
-export function differentAppearance(a: CharacterAppearance, b: CharacterAppearance): boolean {
-    if (a.palette.length !== b.palette.length) { return true }
-
-    let aWindow = new Uint32Array(a.palette.buffer);
-    let bWindow = new Uint32Array(b.palette.buffer);
-
-    for (let i = 0; i < aWindow.length; i++) {
-        if (aWindow[i] !== bWindow[i]) return true;
+        if (itemA && !itemB) { return true }
+        if (!itemA && itemB) { return true }
+        if (itemA && itemB) {
+            if (itemA.name !== itemB.name) { return true }
+            if (differentItemColors(itemA.colors, itemB.colors)) { return true }
+        }
     }
 
     return false;

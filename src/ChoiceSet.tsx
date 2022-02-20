@@ -1,32 +1,30 @@
 import { Component } from 'react';
 import { capitalize } from './App';
-import { StylunkContext } from './AppState';
 import { Berries, Berry } from './CLData/Berries';
 import { ItemCategory, ItemSlot, Wardrobe, WardrobeRules } from './CLData/Clothes/Wardrobe';
-import { sameAppearance } from './CLStyleLib/CharacterAppearance';
+import { CharacterAppearance, differentAppearance } from './CLStyleLib/CharacterAppearance';
 import { differentItemColors, Item } from './CLStyleLib/Item';
 import { Icon } from './ReactComponents/Icon';
 
 interface ItemChoiceProps {
     slot: ItemSlot,
-    item: Item
+    item: Item,
+    appearance: CharacterAppearance,
+    setAppearance: (newAppearance: CharacterAppearance) => void;
 }
 class ItemChoice extends Component<ItemChoiceProps> {
-    static contextType = StylunkContext
-    context!: React.ContextType<typeof StylunkContext>;
-
     override render() {
-        const proposedAppearance = this.context.appearance.withEquipped(this.props.slot, this.props.item);
+        const proposedAppearance = this.props.appearance.withEquipped(this.props.slot, this.props.item);
 
         // TODO: Disable hats for non-Dwarves
         let className = '';
-        if (this.context.appearance.wornItems[this.props.slot]?.name === this.props.item.name) {
+        if (this.props.appearance.wornItems[this.props.slot]?.name === this.props.item.name) {
             className = "active";
         }
 
         return (
             <li>
-                <button className={className} onClick={() => this.context.setAppearance(proposedAppearance)}>
+                <button className={className} onClick={() => this.props.setAppearance(proposedAppearance)}>
                     <Icon appearance={proposedAppearance} />
                     <span>{this.props.item.name}</span>
                 </button>
@@ -37,19 +35,22 @@ class ItemChoice extends Component<ItemChoiceProps> {
 
 interface NoneChoiceProps {
     slot: ItemSlot
+    appearance: CharacterAppearance,
+    setAppearance: (newAppearance: CharacterAppearance) => void;
 }
 class NoneChoice extends Component<NoneChoiceProps> {
-    static contextType = StylunkContext
-    context!: React.ContextType<typeof StylunkContext>;
+    override shouldComponentUpdate(newProps: ChoiceSetProps): boolean {
+        return differentAppearance(this.props.appearance, newProps.appearance);
+    }
 
     override render() {
-        const proposedAppearance = this.context.appearance.withEquipped(this.props.slot);
+        const proposedAppearance = this.props.appearance.withEquipped(this.props.slot);
 
-        let className = this.context.appearance.wornItems[this.props.slot] === undefined ? 'active' : '';
+        let className = this.props.appearance.wornItems[this.props.slot] === undefined ? 'active' : '';
 
         return (
             <li>
-                <button className={className} onClick={() => this.context.setAppearance(proposedAppearance)}>
+                <button className={className} onClick={() => this.props.setAppearance(proposedAppearance)}>
                     <Icon appearance={proposedAppearance} />
                     <span>None</span>
                 </button>
@@ -61,13 +62,12 @@ class NoneChoice extends Component<NoneChoiceProps> {
 interface BerryRowProps {
     slot: ItemSlot,
     berry: Berry,
+    appearance: CharacterAppearance,
+    setAppearance: (newAppearance: CharacterAppearance) => void;
 }
 class BerryRow extends Component<BerryRowProps> {
-    static contextType = StylunkContext
-    context!: React.ContextType<typeof StylunkContext>;
-
     override render() {
-        const { appearance, setAppearance } = this.context;
+        const { appearance, setAppearance } = this.props;
         const equipped = appearance.wornItems[this.props.slot];
 
         let bleachAppearance = appearance;
@@ -106,12 +106,15 @@ class BerryRow extends Component<BerryRowProps> {
 
 interface BerryGridProps {
     slot: ItemSlot
+    appearance: CharacterAppearance,
+    setAppearance: (newAppearance: CharacterAppearance) => void;
+
 }
 class BerryGrid extends Component<BerryGridProps> {
     override render() {
         return (
             <div className="berryGrid">
-                {Berries.map(berry => <BerryRow key={berry.name} slot={this.props.slot} berry={berry}></BerryRow>)}
+                {Berries.map(berry => <BerryRow key={berry.name} {...this.props} berry={berry}></BerryRow>)}
             </div>
         );
     }
@@ -119,16 +122,16 @@ class BerryGrid extends Component<BerryGridProps> {
 
 interface ChoiceSetSummaryProps {
     slot: ItemSlot
+    appearance: CharacterAppearance,
+    setAppearance: (newAppearance: CharacterAppearance) => void;
+
 }
 export class ChoiceSetSummary extends Component<ChoiceSetSummaryProps> {
-    static contextType = StylunkContext
-    context!: React.ContextType<typeof StylunkContext>;
-
     override render() {
-        let equipped = this.context.appearance.wornItems[this.props.slot];
+        let equipped = this.props.appearance.wornItems[this.props.slot];
 
         if (equipped) {
-            let recipe = this.context.appearance.wornItems[this.props.slot]!.toRecipeString()
+            let recipe = this.props.appearance.wornItems[this.props.slot]!.toRecipeString()
             return (
                 <summary>
                     {WardrobeRules[this.props.slot].label}
@@ -143,30 +146,33 @@ export class ChoiceSetSummary extends Component<ChoiceSetSummaryProps> {
 
 interface ChoiceSetProps {
     slot: ItemSlot
+    appearance: CharacterAppearance,
+    setAppearance: (newAppearance: CharacterAppearance) => void;
+
 }
 export class ChoiceSet extends Component<ChoiceSetProps> {
-    override shouldComponentUpdate(_: ChoiceSetProps, __: {}, nextContext: React.ContextType<typeof StylunkContext>): boolean {
-        return !sameAppearance(this.context.appearance, nextContext.appearance);
+    override shouldComponentUpdate(newProps: ChoiceSetProps): boolean {
+        return differentAppearance(this.props.appearance, newProps.appearance);
     }
 
     override render() {
         return (
             <details open={WardrobeRules[this.props.slot].initiallyVisible} className={'slotOptions' + WardrobeRules[this.props.slot].colorable ? ' colorable' : ''}>
-                <ChoiceSetSummary slot={this.props.slot}></ChoiceSetSummary>
+                <ChoiceSetSummary {...this.props}></ChoiceSetSummary>
                 <ul className="optionsList">
-                    {!WardrobeRules[this.props.slot].required ? <NoneChoice slot={this.props.slot}></NoneChoice> : <></>}
+                    {!WardrobeRules[this.props.slot].required ? <NoneChoice {...this.props}></NoneChoice> : <></>}
                     {Wardrobe[this.props.slot].flatMap(item => {
                         return item instanceof Item ? [
-                            <ItemChoice key={item.name} slot={this.props.slot} item={item}></ItemChoice>
+                            <ItemChoice key={item.name} {...this.props} item={item}></ItemChoice>
                         ] : [
                             <li key={item.category} className="category"><h4>{item.category}</h4></li>,
                             ...item.items.map(subItem => (
-                                <ItemChoice key={(item as ItemCategory).category! + '_' + subItem.name} slot={this.props.slot} item={subItem}></ItemChoice>
+                                <ItemChoice key={(item as ItemCategory).category! + '_' + subItem.name} {...this.props} item={subItem}></ItemChoice>
                             ))
                         ];
                     })}
                 </ul>
-                {WardrobeRules[this.props.slot].colorable ? <BerryGrid slot={this.props.slot}></BerryGrid> : <></>}
+                {WardrobeRules[this.props.slot].colorable ? <BerryGrid {...this.props}></BerryGrid> : <></>}
             </details>
         );
     }

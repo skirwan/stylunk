@@ -1,5 +1,5 @@
 import { Component, createRef, CSSProperties, RefObject } from "react";
-import { StylunkContext } from "../AppState";
+import { GlobalImageDataCache } from "../App";
 import { CharacterAppearance, differentAppearance } from "../CLStyleLib/CharacterAppearance";
 
 interface IconAttributes {
@@ -10,18 +10,33 @@ interface IconAttributes {
 const runningJestTest = process.env.JEST_WORKER_ID !== undefined;
 
 export class Icon extends Component<IconAttributes> {
-  static contextType = StylunkContext
-  context!: React.ContextType<typeof StylunkContext>;
-
   private elementRef: RefObject<HTMLCanvasElement>;
   private imageData?: ImageData;
+  private dirty: boolean = true;
+  private visible: boolean = true;
+  private observer: IntersectionObserver;
 
   constructor(props: IconAttributes) {
     //console.log('constructor');
     super(props);
     this.elementRef = createRef();
+    this.setColors = this.setColors.bind(this);
+    this.intersectionChangedCallack = this.intersectionChangedCallack.bind(this);
+    this.observer = new IntersectionObserver(this.intersectionChangedCallack);
   }
 
+  intersectionChangedCallack(entries: IntersectionObserverEntry[], observer: IntersectionObserver): void {
+    if (entries[0].intersectionRatio <= 0) {
+      this.visible = false;
+    } else {
+      if (!this.visible) {
+        this.visible = true
+        if (this.dirty) {
+          this.setColors();
+        }
+      }
+    }
+  }
   valid(): boolean {
     //console.log('valid');
     const [poseX, poseY] = this.props.pose ?? [8, 0];
@@ -37,11 +52,14 @@ export class Icon extends Component<IconAttributes> {
   setColors() {
     //console.log('setColors');
     if (!this.elementRef.current) return;
+    if (!this.dirty) return;
+
+    this.dirty = false;
 
     let icon = this.props.appearance.icon;
     let palette = this.props.appearance.palette;
 
-    let currentImageData = this.context.cache.getImageData(icon, palette);
+    let currentImageData = GlobalImageDataCache.getImageData(icon, palette);
     this.imageData = currentImageData
 
     if (runningJestTest) { return; }
@@ -63,6 +81,8 @@ export class Icon extends Component<IconAttributes> {
 
   override componentDidMount() {
     //console.log('componentDidMount');
+    if (!this.elementRef.current) return;
+    this.observer.observe(this.elementRef.current);
     this.setColors();
   }
 
@@ -70,6 +90,7 @@ export class Icon extends Component<IconAttributes> {
     //console.log('shouldComponentUpdate');
     //if (this.props.appearance !== newProps.appearance) { return true }
 
+    this.dirty = true;
     const [poseX, poseY] = this.props.pose ?? [8, 0];
     const [newX, newY] = newProps.pose ?? [8, 0];
 
@@ -79,6 +100,7 @@ export class Icon extends Component<IconAttributes> {
     if (this.props.appearance.icon !== newProps.appearance.icon) { return true }
     if (differentAppearance(this.props.appearance, newProps.appearance)) { return true }
 
+    this.dirty = false;
     return false;
   }
 
@@ -100,7 +122,12 @@ export class Icon extends Component<IconAttributes> {
   }
 
   override componentDidUpdate() {
-    //console.log('componentDidUpdate');
-    this.setColors();
+    if (this.dirty && this.visible) {
+      window.setTimeout(this.setColors, 0)
+    }
+  }
+
+  override componentWillUnmount() {
+    this.observer.disconnect();
   }
 }

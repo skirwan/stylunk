@@ -1,6 +1,5 @@
 import { Component } from 'react';
 import { capitalize } from './App';
-import { StylunkContext } from './AppState';
 import { CharacterAppearance, differentAppearance } from './CLStyleLib/CharacterAppearance';
 import { CharIcon, icons } from './CLStyleLib/CharIcon';
 import { Icon } from './ReactComponents/Icon';
@@ -30,30 +29,30 @@ class IconCaption extends Component<CaptionProps> {
 
 interface IconChoiceButtonProps {
     icon: CharIcon
+    appearance: CharacterAppearance,
+    setAppearance: (newAppearance: CharacterAppearance) => void;
+
 }
 
 export class IconChoiceButton extends Component<IconChoiceButtonProps> {
-    static contextType = StylunkContext
-    context!: React.ContextType<typeof StylunkContext>;
-    
-    override shouldComponentUpdate(newProps: IconChoiceButtonProps, _: {}, newContext: React.ContextType<typeof StylunkContext>): boolean {
+    override shouldComponentUpdate(newProps: IconChoiceButtonProps): boolean {
         if (newProps.icon !== this.props.icon) { return true }
-        return differentAppearance(newContext.appearance, this.context.appearance);
+        return differentAppearance(newProps.appearance, this.props.appearance);
     }
 
     override render() {
-        const proposedAppearance = this.context.appearance.withIcon(this.props.icon)
+        const proposedAppearance = this.props.appearance.withIcon(this.props.icon)
 
         let disabled = false;
         let className = '';
 
-        if (this.context.appearance.icon === this.props.icon) {
+        if (this.props.appearance.icon === this.props.icon) {
             disabled = true;
             className = 'disabled';
         }
 
         return (
-            <button disabled={disabled} className={className} onClick={() => this.context.setAppearance(proposedAppearance)}>
+            <button disabled={disabled} className={className} onClick={() => this.props.setAppearance(proposedAppearance)}>
                 <Icon appearance={proposedAppearance} />
                 <IconCaption icon={this.props.icon}></IconCaption>
             </button>
@@ -63,6 +62,7 @@ export class IconChoiceButton extends Component<IconChoiceButtonProps> {
 
 interface IconChooserProps {
     appearance: CharacterAppearance;
+    setAppearance: (newAppearance: CharacterAppearance) => void;
 }
 export class IconChooser extends Component<IconChooserProps> {
     override shouldComponentUpdate(newProps: IconChooserProps): boolean {
@@ -77,7 +77,7 @@ export class IconChooser extends Component<IconChooserProps> {
                 <summary>Icon <span className="currentSelection"> — <IconCaption icon={this.props.appearance.icon}></IconCaption></span></summary>
                 <ul className="optionsList">
                     {icons.map(icon => <li key={`${icon.race}_${icon.gender}_${icon.armed}_${icon.variant}`}>
-                        <IconChoiceButton icon={icon}></IconChoiceButton>
+                        <IconChoiceButton icon={icon} {...this.props}></IconChoiceButton>
                     </li>
                     )}
                 </ul>

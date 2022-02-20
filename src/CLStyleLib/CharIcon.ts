@@ -1,5 +1,5 @@
 export interface SkipChunk { skip: number; }
-export interface DataChunk { data: string; }
+export interface DataChunk { data: string; binaryData?: string; }
 export type PixelChunk = SkipChunk | DataChunk
 
 export interface CharIcon {
