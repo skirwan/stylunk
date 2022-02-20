@@ -463,7 +463,7 @@ export const Wardrobe: Record<ItemSlot, SlotOptions> = {
             makePants('Ocean Blue (8th•)', '325', '105'),
         ]
     }, {
-        category: 'Estuary Collection',
+        category: 'Estuary',
         items: [
             makePants('Gathering Dusk', '134', '112'),
             makePants('Mirror Pond', '134', '222'),
