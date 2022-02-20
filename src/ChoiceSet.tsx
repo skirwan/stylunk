@@ -70,35 +70,46 @@ class BerryRow extends Component<BerryRowProps> {
         const { appearance, setAppearance } = this.props;
         const equipped = appearance.wornItems[this.props.slot];
 
+        const showBleach = !!this.props.berry.bleach;
         let bleachAppearance = appearance;
         let canBleach = false;
+        const showDye = !!this.props.berry.dye;
         let dyeAppearance = appearance;
         let canDye = false;
 
         if (equipped !== undefined) {
-            bleachAppearance = appearance.withColorManipulated(this.props.slot, this.props.berry.bleach)
-            canBleach = differentItemColors(
-                bleachAppearance.wornItems[this.props.slot]!.colors,
-                equipped.colors
-            );
+            if (this.props.berry.bleach) {
+                bleachAppearance = appearance.withColorManipulated(this.props.slot, this.props.berry.bleach)
+                canBleach = differentItemColors(
+                    bleachAppearance.wornItems[this.props.slot]!.colors,
+                    equipped.colors
+                );
+            }
 
-            dyeAppearance = appearance.withColorManipulated(this.props.slot, this.props.berry.dye)
-            canDye = differentItemColors(
-                dyeAppearance.wornItems[this.props.slot]!.colors,
-                equipped.colors
-            );
+            if (this.props.berry.dye) {
+                dyeAppearance = appearance.withColorManipulated(this.props.slot, this.props.berry.dye)
+                canDye = differentItemColors(
+                    dyeAppearance.wornItems[this.props.slot]!.colors,
+                    equipped.colors
+                );
+            }
         }
 
         return (
             <div className="berry">
-                <button disabled={!canBleach} onClick={() => setAppearance(bleachAppearance)}>
-                    <Icon appearance={bleachAppearance} />
-                    <span>{capitalize(this.props.berry.name)} Bleach</span>
-                </button>
-                <button disabled={!canDye} onClick={() => setAppearance(dyeAppearance)}>
-                    <Icon appearance={dyeAppearance} />
-                    <span>{capitalize(this.props.berry.name)} Dye</span>
-                </button>
+                {showBleach ? 
+                    <button disabled={!canBleach} onClick={() => setAppearance(bleachAppearance)}>
+                        <Icon appearance={bleachAppearance} />
+                        <span>{capitalize(this.props.berry.name)} Bleach</span>
+                    </button>
+                    : <></>
+                }
+                {showDye &&
+                    <button disabled={!canDye} onClick={() => setAppearance(dyeAppearance)}>
+                        <Icon appearance={dyeAppearance} />
+                        <span>{capitalize(this.props.berry.name)} Dye</span>
+                    </button>
+                }
             </div>
         );
     }

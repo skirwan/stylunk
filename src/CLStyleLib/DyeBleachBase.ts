@@ -1,5 +1,5 @@
 import { adjust, ColorNum, ColorComponent, StyleColor } from "./Color";
-import { ColorManipulator, differentItemColors, ItemColor } from "./Item";
+import { ColorManipulator, ItemColor } from "./Item";
 
 export class DyeBleachBase implements ColorManipulator {
     static readonly colorChannelConstraints: { [key: string]: { min?: ColorNum, max?: ColorNum } } = {
@@ -18,11 +18,6 @@ export class DyeBleachBase implements ColorManipulator {
         if (min) newVal = Math.max(min, newVal) as ColorNum;
         if (max) newVal = Math.min(max, newVal) as ColorNum;
         return newVal;
-    }
-
-    canApply(colors?: Array<ItemColor>): boolean {
-        if (!colors) { return false; }
-        return differentItemColors(colors, this.apply(colors));
     }
 
     apply(colors: Array<ItemColor>): Array<ItemColor> {

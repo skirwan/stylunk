@@ -16,7 +16,6 @@ export interface ItemAttributes {
 
 export interface ColorManipulator {
     name: string;
-    canApply(colors?: Array<ItemColor>): boolean;
     apply(colors: Array<ItemColor>): Array<ItemColor>
 }
 
