@@ -216,16 +216,6 @@ details {
   display:block;
 }
 
-
-@media screen and (orientation: landscape) and (min-height: 768px) {
-  .previewPanel .iconWrapper {
-    flex-grow: 0;
-  }
-
-  .previewPanel .posePanel {
-    flex-grow: 10;
-  }
-}
 @media screen and (orientation: landscape) {
   .App {
     padding-left: 310px;
@@ -235,14 +225,34 @@ details {
     height:unset;
     left:0;
     top:0;
-    bottom:0;
+    bottom:-1px;
     width:300px;
-    flex-direction: column;
+    display:block;
+  }
+
+  .previewPanel .iconWrapper {
+    position:absolute;
+    top:10px;
+    left:10px;
+    width:280px;
+    bottom:110px;
+    max-height:280px;
+    line-height: 100%;
+  }
+
+  .previewPanel .iconWrapper .icon {
+    transform: none;
+    height:100%;
   }
 
   .previewPanel .posePanel {
-    width:unset;
-    display:block;
+    display: block;
+    box-sizing: border-box;
+    position: absolute;
+    height: 100px;
+    width: 300px;
+    bottom: 0;
+    left: 0;
   }
 
   .previewPanel + * {
@@ -270,6 +280,7 @@ details {
     padding-right: 0;
     width: unset;
     min-width: unset;
+    margin:0;
   }
 
   .buttonGroup button:first-child {
@@ -293,5 +304,15 @@ details {
     padding-right: 0;
     line-height: 1;
     width: calc(100% - 90px);
+  }
+}
+
+@media screen and (orientation: landscape) and (min-height: 400px) {
+  .previewPanel .posePanel {
+    left: 0;
+    width: 100%;
+    bottom: 0;
+    top: 300px;
+    height:unset;
   }
 }
