@@ -48,7 +48,7 @@ export class IconChoiceButton extends Component<IconChoiceButtonProps> {
 
         if (this.props.appearance.icon === this.props.icon) {
             disabled = true;
-            className = 'disabled';
+            className = 'active';
         }
 
         return (

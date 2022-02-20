@@ -106,8 +106,8 @@ button:hover:not(:disabled) {
   background: linear-gradient(#6c7c7c, #768d87);
 }
 
-button:disabled,
-button.disabled {
+button:disabled:not(.active),
+button.disabled:not(.active) {
   opacity: 0.5;
 }
 
@@ -225,6 +225,9 @@ details {
     bottom:-1px;
     width:300px;
     display:block;
+    border-bottom:0;
+    border-right:1px solid #768d87;
+    box-shadow: inset -1px 0 #91b8b3;
   }
 
   .previewPanel .iconWrapper {
