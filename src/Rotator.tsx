@@ -42,8 +42,9 @@ export class Rotator extends Component<RotatorProps> {
         if (!this.elementRef.current) { return this.props.degrees; }
         if (!this.thumbRef.current) { return this.props.degrees; }
 
-        const midX = this.elementRef.current.offsetLeft + this.elementRef.current.offsetWidth / 2;
-        const midY = this.elementRef.current.offsetTop + this.elementRef.current.offsetHeight / 2;
+        let rect = this.elementRef.current.getBoundingClientRect()
+        const midX = rect.left + rect.width / 2;
+        const midY = rect.top + rect.height / 2;
         const relX = evt.clientX - midX;
         const relY = evt.clientY - midY;
 
