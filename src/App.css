@@ -2,10 +2,6 @@ body {
   background: #eeeeee;
 }
 
-.App {
-  padding: 10px;
-}
-
 .icon {
 }
 
@@ -49,18 +45,16 @@ body {
   margin:10px;
 }
 .previewPanel + * {
-  margin-top:310px;
+  margin-top:300px;
 }
 
 .optionsList {
   list-style: none;
-  margin:0;
   padding:0;
   display: grid;
   grid-template-columns: repeat(auto-fill, 1px minmax(100px, 1fr));
   gap: 10px;
   margin:10px;
-  margin-top:15px;
 }
 
 .optionsList > li {
@@ -169,6 +163,11 @@ summary {
   cursor:pointer;
   padding:0 10px;
   font-weight: bold;
+  font-size:12px;
+  color:#fff;
+  box-shadow:inset 0px 1px #91b8b3;
+  text-shadow: 0px -1px 0px #2b665e;
+  background:linear-gradient(#768d87, #6c7c7c);
 }
 
 summary .currentSelection {
@@ -180,9 +179,7 @@ summary .currentSelection span {
 }
 
 details {
-  border: 1px solid #566963;
-  margin-bottom: 10px;
-  border-radius: 4px;
+  border-bottom: 1px solid #566963;
 }
 
 .berryGrid {
@@ -218,7 +215,7 @@ details {
 
 @media screen and (orientation: landscape) {
   .App {
-    padding-left: 310px;
+    padding-left: 300px;
   }
   .previewPanel {
     right:unset;
