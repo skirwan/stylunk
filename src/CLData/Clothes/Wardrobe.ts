@@ -1,6 +1,7 @@
 import { Color, makeColor } from "../../CLStyleLib/Color";
 import { Item, ItemAttributes, ItemColor } from "../../CLStyleLib/Item";
 import { ClothesIndices, OrderedClothesIndices } from "../../CLStyleLib/Palette";
+import { makePants } from "../../CLStyleLib/Pants";
 import { makeShirt } from "../../CLStyleLib/Shirt";
 
 export type ItemSlot = 'underwear' | 'weapon' | 'skin' | 'hair' | 'hat' | 'skindye' | 'shoes' | 'belt' | 'shirt' | 'pants';
@@ -434,7 +435,44 @@ export const Wardrobe: Record<ItemSlot, SlotOptions> = {
             makeShirt('Yellow Team', '551', '441', '330', { lockedColors: true, lockNotCloak: true }),
         ]
     }],
-    'pants': [],
+    'pants': [{
+        category: 'General',
+        items: [
+            makePants('Tan', '432', '321'),
+            makePants('Blue', '113', '002'),
+            makePants('Forest Green', '020', '010'),
+            makePants('Grey', '333', '111'),
+            makePants('Muddy Yellow', '442', '320'),
+            makePants('Albino Maha Fur', '222', '444'),
+            makePants('Puma Skin', '222', '000'),
+            makePants('Brown', '321', '210'),
+            makePants('Silk', '554', '433'),
+        ]
+    }, {
+        category: 'Historical',
+        items: [
+            makePants('Gold', '541', '530'),
+            makePants('Newbie Orange', '532', '421'),
+        ]
+    }, {
+        category: 'Healer',
+        items: [
+            makePants('White (2nd•)', '455', '444'),
+            makePants('Turquoise (4th•)', '243', '122'),
+            makePants('Sea Wheat (6th•)', '143', '125'),
+            makePants('Ocean Blue (8th•)', '325', '105'),
+        ]
+    }, {
+        category: 'Estuary Collection',
+        items: [
+            makePants('Gathering Dusk', '134', '112'),
+            makePants('Mirror Pond', '134', '222'),
+            makePants('Bruised Sapphire', '024', '111'),
+            makePants('Floodwater', '023', '111'),
+            makePants('Deep Sea Ebony', '134', '001'),
+        ]
+    }
+    ],
 };
 
 interface SlotRules {
