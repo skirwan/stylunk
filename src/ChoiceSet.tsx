@@ -94,7 +94,7 @@ class BerryRow extends Component<BerryRowProps> {
         return (
             <div className="berry">
                 { buttons.map(({action, appearance, allowed}) => (
-                    <button disabled={!allowed} onClick={() => setAppearance(appearance)}>
+                    <button key={action} disabled={!allowed} onClick={() => setAppearance(appearance)}>
                         <Icon appearance={appearance} />
                         <span>{capitalize(this.props.berry.name + " " + action)}</span>
                     </button>
