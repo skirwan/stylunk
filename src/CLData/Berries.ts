@@ -7,6 +7,13 @@ export interface Berry {
     actions: { [key: string]: ColorManipulator };
 }
 
+export const BerryActionSort: { [key: string]: number } = {
+    'burn': -1,
+    'bleach': 0,
+    'dye': 1,
+    'shock': 2,
+};
+
 let b: Array<Berry> = [{
     name: 'Lilaberry',
     actions: {

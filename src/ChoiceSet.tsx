@@ -1,6 +1,6 @@
 import { Component } from 'react';
 import { capitalize } from './App';
-import { Berries, Berry } from './CLData/Berries';
+import { Berries, Berry, BerryActionSort } from './CLData/Berries';
 import { ItemCategory, ItemSlot, Wardrobe, WardrobeRules } from './CLData/Clothes/Wardrobe';
 import { CharacterAppearance, differentAppearance } from './CLStyleLib/CharacterAppearance';
 import { differentItemColors, Item } from './CLStyleLib/Item';
@@ -71,6 +71,9 @@ class BerryRow extends Component<BerryRowProps> {
         const equipped = appearance.wornItems[this.props.slot];
 
         const actions = Object.keys(this.props.berry.actions);
+        actions.sort((a,b) => {
+            return (BerryActionSort[a] ?? 0) - (BerryActionSort[b] ?? 0);
+        });
         const buttons: Array<{ 
             action: string, 
             appearance: CharacterAppearance, 
