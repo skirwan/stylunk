@@ -14,7 +14,7 @@ export class Icon extends Component<IconAttributes> {
   private imageData?: ImageData;
   private dirty: boolean = true;
   private visible: boolean = true;
-  private observer: IntersectionObserver;
+  private observer?: IntersectionObserver;
 
   constructor(props: IconAttributes) {
     //console.log('constructor');
@@ -22,7 +22,9 @@ export class Icon extends Component<IconAttributes> {
     this.elementRef = createRef();
     this.setColors = this.setColors.bind(this);
     this.intersectionChangedCallack = this.intersectionChangedCallack.bind(this);
-    this.observer = new IntersectionObserver(this.intersectionChangedCallack);
+    if (!runningJestTest) {
+      this.observer = new IntersectionObserver(this.intersectionChangedCallack);
+    }
   }
 
   intersectionChangedCallack(entries: IntersectionObserverEntry[], observer: IntersectionObserver): void {
@@ -82,7 +84,7 @@ export class Icon extends Component<IconAttributes> {
   override componentDidMount() {
     //console.log('componentDidMount');
     if (!this.elementRef.current) return;
-    this.observer.observe(this.elementRef.current);
+    this.observer?.observe(this.elementRef.current);
     this.setColors();
   }
 
@@ -128,6 +130,6 @@ export class Icon extends Component<IconAttributes> {
   }
 
   override componentWillUnmount() {
-    this.observer.disconnect();
+    this.observer?.disconnect();
   }
 }
