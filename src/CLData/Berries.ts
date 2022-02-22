@@ -76,10 +76,70 @@ class Ferment implements ColorManipulator {
     }
 }
 
+class Burn implements ColorManipulator {
+    constructor(
+        readonly name: string,
+        readonly components: Array<ColorComponent>,
+    ) { }
+
+    apply(colors: ItemColor[]): ItemColor[] {
+        let anchor = { r: 0, g: 0, b: 0};
+
+        colors.forEach(itemColor => {
+            if (itemColor.color instanceof StyleColor) {
+                
+                for (const component of this.components) {
+                    anchor[component] += itemColor.color[component];
+                }
+            }
+        });
+
+        anchor = { 
+            r: anchor.r / colors.length | 0,
+            g: anchor.g / colors.length | 0,
+            b: anchor.b / colors.length | 0,
+        }
+
+        return colors.map(itemColor => {
+            if (itemColor.color instanceof StyleColor) {
+                let { r, g, b } = itemColor.color;
+                let triad = { r, g, b };
+
+                for (const component of this.components) {
+                    let value = triad[component] + (anchor[component] - triad[component]) / 2;
+                    value = Math.min(5, Math.max(0, value | 0));
+                    triad[component] = value as ColorNum;
+                }
+                
+                ({ r, g, b } = triad);
+
+                if (r === 5 && g === 5 && b === 5) {
+                    // Nobody can have invisible clothes but Skirwan
+                    r = 0;
+                    g = 0;
+                    b = 0;
+                }
+
+                return new ItemColor(
+                    itemColor.paletteIndex,
+                    itemColor.name,
+                    new StyleColor(r, g, b),
+                );
+            } else {
+                return itemColor;
+            }
+        });
+    }
+}
+
 if (window.location.hash === '#SECRET') {
     b[0].actions['shock'] = new Ferment('*L', ['g', 'b']);
     b[1].actions['shock'] = new Ferment('*O', ['r', 'b']);
     b[2].actions['shock'] = new Ferment('*B', ['r', 'g']);
+
+    b[0].actions['burn'] = new Burn('*L', ['r']);
+    b[1].actions['burn'] = new Burn('*O', ['g']);
+    b[2].actions['burn'] = new Burn('*B', ['b']);
 
     b.push({
         name: 'Fribbleberry',
