@@ -15,7 +15,7 @@ class IconCaption extends Component<CaptionProps> {
     override render() {
         let icon = this.props.icon;
 
-        let armed: JSX.Element = icon.armed ? <>, unarmed</> : <></>;
+        let armed: JSX.Element = icon.armed ? <></> : <>, unarmed</>;
         let variant: JSX.Element = icon.variant ? <i> ({capitalize(icon.variant)})</i> : <></>;
 
         return (
