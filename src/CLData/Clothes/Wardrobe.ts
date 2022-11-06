@@ -451,6 +451,7 @@ export const Wardrobe: Record<ItemSlot, SlotOptions> = {
     }, {
         category: 'Special',
         items: [
+            makeShirt('Fur-lined Cloak', '432', '321', '210', { lockCloak: true} ),
             makeShirt('Bloodshroud', '311', '200', '100', { lockCloak: true, lockedColors: true }),
             makeShirt('Lava Cloak', '421', '310', '200', { lockCloak: true, lockedColors: true }),
             makeShirt('Red Team', '500', '411', '300', { lockedColors: true, lockNotCloak: true }),
