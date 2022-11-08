@@ -480,6 +480,7 @@ export const Wardrobe: Record<ItemSlot, SlotOptions> = {
             makeShirt('Purple', '314', '203', '102'),
             makeShirt('Silk', '554', '544', '433'),
             makeShirt('Mountain Goat', '544', '432', '222'),
+            makeShirt('New Gold', '552', '541', '530')
         ]
     }, {
         category: 'Grefo_Toppa',
@@ -563,6 +564,7 @@ export const Wardrobe: Record<ItemSlot, SlotOptions> = {
             makePants('Floodwater', '023', '111'),
             makePants('Deep Sea Ebony', '134', '001'),
             makePants('Deluge', '234', '012' ),
+            makePants('Thundercloud', '234', '111')
         ]
     }
     ],
