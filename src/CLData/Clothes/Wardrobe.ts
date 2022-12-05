@@ -71,6 +71,21 @@ export const Wardrobe: Record<ItemSlot, SlotOptions> = {
             indexAccessoryLight: makeColor([102, 204, 204]),
             indexAccessoryDark: makeColor([0, 153, 153]),
         }),
+        makeItem('Default NPC', {
+            indexHatLight: makeColor([0, 255, 0]),
+            indexHatMid: makeColor([0, 204, 0]),
+            indexHatDark: makeColor([0, 153, 0]),
+            indexShirtLight: makeColor([0, 255, 153]),
+            indexShirtMid: makeColor([0, 153, 51]),
+            indexShirtDark: makeColor([0, 102, 51]),
+            indexPantsLight: makeColor([102, 102, 204]),
+            indexPantsDark: makeColor([51, 51, 153]),
+            indexShoes: makeColor([102, 51, 51]),
+            indexBeltLight: makeColor([204, 204, 0]),
+            indexBeltDark: makeColor([153, 153, 0]),
+            indexAccessoryLight: makeColor([0, 0, 255]),
+            indexAccessoryDark: makeColor([0, 0, 102]),
+        }),
     ],
     'weapon': [
         makeItem('Cerulean Blue', {
@@ -88,6 +103,30 @@ export const Wardrobe: Record<ItemSlot, SlotOptions> = {
         makeItem('Black', {
             indexWeaponDark: makeColor([0, 0, 0]),
             indexWeaponLight: makeColor([0, 0, 0]),
+        }),
+        makeItem('Swift River Blue', {
+            indexWeaponDark: makeColor([51, 102, 255]),
+            indexWeaponLight: makeColor([51, 153, 255]),
+        }),
+        makeItem('Deep River Blue', {
+            indexWeaponDark: makeColor([0, 51, 153]),
+            indexWeaponLight: makeColor([51, 51, 204]),
+        }),
+        makeItem('Atkite Boost', {
+            indexWeaponDark: makeColor([0, 0, 51]),
+            indexWeaponLight: makeColor([0, 0, 153]),
+        }),
+        makeItem('Darkite Boost', {
+            indexWeaponDark: makeColor([153, 51, 0]),
+            indexWeaponLight: makeColor([204, 51, 0]),
+        }),
+        makeItem('Dethite Boost', {
+            indexWeaponDark: makeColor([51, 51, 0]),
+            indexWeaponLight: makeColor([102, 102, 0]),
+        }),
+        makeItem('Balthite Boost', {
+            indexWeaponDark: makeColor([0, 51, 153]),
+            indexWeaponLight: makeColor([51, 51, 204]),
         }),
     ],
     'skin': [
@@ -192,23 +231,53 @@ export const Wardrobe: Record<ItemSlot, SlotOptions> = {
         makeItem('Gray', {
             indexHairLight: makeColor([136, 136, 136]),
             indexHairDark: makeColor([102, 102, 153]),
-        })
+        }),
     ],
     'hat': [
+        makeItem('Gray', {
+            indexHatLight: makeColor([153, 153, 153]),
+            indexHatMid: makeColor([102, 102, 102]),
+            indexHatDark: makeColor([51, 51, 51]),
+        }),
+        makeItem('Tan', {
+            indexHatLight: makeColor([255, 204, 153]),
+            indexHatMid: makeColor([255, 153, 102]),
+            indexHatDark: makeColor([204, 102, 51]),
+        }),
+        makeItem('Green', {
+            indexHatLight: makeColor([51, 153, 51]),
+            indexHatMid: makeColor([51, 153, 0]),
+            indexHatDark: makeColor([0, 153, 0]),
+        }),
+        makeItem('Black', {
+            indexHatLight: makeColor([51, 0, 51]),
+            indexHatMid: makeColor([51, 0, 0]),
+            indexHatDark: makeColor([0, 0, 0]),
+        }),
+        makeItem('Purple', {
+            indexHatLight: makeColor([102, 0, 204]),
+            indexHatMid: makeColor([102, 0, 153]),
+            indexHatDark: makeColor([102, 0, 102]),
+        }),
         makeItem('Blue', {
             indexHatLight: makeColor([0, 0, 255]),
             indexHatMid: makeColor([0, 0, 204]),
             indexHatDark: makeColor([0, 51, 153]),
+        }),
+        makeItem('White', {
+            indexHatLight: makeColor([255, 255, 204]),
+            indexHatMid: makeColor([204, 255, 204]),
+            indexHatDark: makeColor([204, 204, 255]),
         }),
         makeItem('Red', {
             indexHatLight: makeColor([255, 0, 0]),
             indexHatMid: makeColor([204, 0, 0]),
             indexHatDark: makeColor([153, 0, 0]),
         }),
-        makeItem('Gray', {
-            indexHatLight: makeColor([153, 153, 153]),
-            indexHatMid: makeColor([102, 102, 102]),
-            indexHatDark: makeColor([51, 51, 51]),
+        makeItem('Golden', {
+            indexHatLight: makeColor([255, 204, 0]),
+            indexHatMid: makeColor([255, 153, 102]),
+            indexHatDark: makeColor([255, 153, 51]),
         }),
     ],
     'skindye': [
@@ -317,6 +386,16 @@ export const Wardrobe: Record<ItemSlot, SlotOptions> = {
             indexSkinMid: makeColor([102, 102, 0]),
             indexSkinLight: makeColor([153, 153, 102]),
         }),
+        makeItem('Shadow #1', {
+            indexSkinDark: makeColor([102, 0, 153]),
+            indexSkinMid: makeColor([102, 0, 102]),
+            indexSkinLight: makeColor([102, 0, 153]),
+        }),
+        makeItem('Shadow #2', {
+            indexSkinDark: makeColor([102, 0, 102]),
+            indexSkinMid: makeColor([102, 0, 204]),
+            indexSkinLight: makeColor([102, 0, 255]),
+        }),
     ],
     'shoes': [
         makeItem('Pink Slippers', { indexShoes: makeColor([204, 102, 153]) }),
@@ -335,6 +414,7 @@ export const Wardrobe: Record<ItemSlot, SlotOptions> = {
         makeItem('Green Clogs', { indexShoes: makeColor([0, 153, 51]) }),
         makeItem('Purple Sandals', { indexShoes: makeColor([153, 0, 204]) }),
         makeItem('Gold Wing Tips', { indexShoes: makeColor([204, 153, 51]) }),
+        makeItem('Dance Slippers', {indexShoes: makeColor([255, 153, 255]) }),
     ],
     'belt': [
         makeItem('Bard', {
@@ -381,6 +461,10 @@ export const Wardrobe: Record<ItemSlot, SlotOptions> = {
             indexBeltLight: makeColor([255, 255, 204]),
             indexBeltDark: makeColor([255, 204, 204]),
         }),
+        makeItem('Sash', {
+            indexBeltLight: makeColor([255, 255, 204]),
+            indexBeltDark: makeColor([255, 153, 204])
+        }),
     ],
     'shirt': [{
         category: 'General',
@@ -388,8 +472,6 @@ export const Wardrobe: Record<ItemSlot, SlotOptions> = {
             makeShirt('Tan', '543', '432', '321'),
             makeShirt('Blue', '224', '113', '002'),
             makeShirt('Gray', '333', '222', '111'),
-            makeShirt('Muddy Forest', '320', '220', '211'),
-            makeShirt('Forest Green', '030', '020', '010'),
             makeShirt('Grassy Green', '253', '142', '031'),
             makeShirt('Grey', '333', '222', '111'),
             makeShirt('Muddy Yellow', '320', '442', '320'),
@@ -398,6 +480,13 @@ export const Wardrobe: Record<ItemSlot, SlotOptions> = {
             makeShirt('Purple', '314', '203', '102'),
             makeShirt('Silk', '554', '544', '433'),
             makeShirt('Mountain Goat', '544', '432', '222'),
+            makeShirt('New Gold', '552', '541', '530')
+        ]
+    }, {
+        category: 'Grefo_Toppa',
+        items: [
+            makeShirt('Muddy Forest', '320', '220', '211'),
+            makeShirt('Forest Green', '030', '020', '010'),
             makeShirt('Woodland Green', '242', '321', '120'),
         ]
     }, {
@@ -413,6 +502,7 @@ export const Wardrobe: Record<ItemSlot, SlotOptions> = {
             makeShirt('Turquoise (3rd•)', '355', '243', '122'),
             makeShirt('Sea Wheat (5th•)', '542', '143', '125'),
             makeShirt('Mossy Lavender (7th•)', '042', '325', '105'),
+            makeShirt('Dreamless', '203', '213', '224', { lockCloak: true}),
         ]
     }, {
         category: 'Carnival',
@@ -421,13 +511,16 @@ export const Wardrobe: Record<ItemSlot, SlotOptions> = {
             makeShirt('Bright Green', '551', '241', '030'),
             makeShirt('Bright Sunrise', '541', '530', '400'),
             makeShirt('Bright Sunset', '532', '412', '102'),
+            makeShirt('Summer Artak', '521', '111', '001'),
             makeShirt('Thundercloud', '234', '111', '001'),
             makeShirt('Bubblegum', '544', '525', '202'),
             makeShirt('Campfire', '300', '420', '540'),
+            makeShirt('Emerald', '550','232','010'),
         ]
     }, {
         category: 'Special',
         items: [
+            makeShirt('Fur-lined Cloak', '432', '321', '210', { lockCloak: true} ),
             makeShirt('Bloodshroud', '311', '200', '100', { lockCloak: true, lockedColors: true }),
             makeShirt('Lava Cloak', '421', '310', '200', { lockCloak: true, lockedColors: true }),
             makeShirt('Red Team', '500', '411', '300', { lockedColors: true, lockNotCloak: true }),
@@ -470,6 +563,8 @@ export const Wardrobe: Record<ItemSlot, SlotOptions> = {
             makePants('Bruised Sapphire', '024', '111'),
             makePants('Floodwater', '023', '111'),
             makePants('Deep Sea Ebony', '134', '001'),
+            makePants('Deluge', '234', '012' ),
+            makePants('Thundercloud', '234', '111')
         ]
     }
     ],
