@@ -67,7 +67,7 @@ interface IconChooserProps {
 export class IconChooser extends Component<IconChooserProps> {
     override shouldComponentUpdate(newProps: IconChooserProps): boolean {
         if (this.props.appearance.icon !== newProps.appearance.icon) { return true }
-        return false;
+        return differentAppearance(newProps.appearance, this.props.appearance);
     }
 
     override render() {
