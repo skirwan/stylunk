@@ -120,8 +120,8 @@ export class PosePanel extends Component<PosePanelProps, PosePanelState> {
     tick() {
         switch (this.state.mode.mode) {
             case 'stand':
-            case 'dance':
                 return;
+            case 'dance':
             case 'walk':
             case 'attack':
                 let newMode = { ...this.state.mode, frame: 1 + this.state.mode.frame };
