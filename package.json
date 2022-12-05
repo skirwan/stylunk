@@ -17,7 +17,7 @@
   },
   "devDependencies": {
     "follow-redirects": "^1.14.8",
-    "react-scripts": "5.0.0"
+    "react-scripts": "5.0.1"
   },
   "scripts": {
     "start": "react-scripts start",
