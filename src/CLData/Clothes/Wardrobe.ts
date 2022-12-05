@@ -638,3 +638,12 @@ export const WardrobeRules: Record<ItemSlot, SlotRules> = {
         initiallyVisible: true,
     }
 }
+
+if (window.location.hash === '#GHOST') {
+    (Wardrobe.shirt as Array<ItemCategory>).push({
+        category: 'Super Special',
+        items: [
+            makeShirt('Ghoststone Shirt', '555', '555', '555'),
+        ]
+    });
+}
