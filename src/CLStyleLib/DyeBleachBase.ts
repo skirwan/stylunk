@@ -15,8 +15,8 @@ export class DyeBleachBase implements ColorManipulator {
 
     private adjustAndClamp(c: ColorNum, change: 1 | -1, min?: ColorNum, max?: ColorNum): ColorNum {
         let newVal = adjust(c, change);
-        if (min) newVal = Math.max(min, newVal) as ColorNum;
-        if (max) newVal = Math.min(max, newVal) as ColorNum;
+        if (change < 0 && typeof(min) === 'number' && newVal < min) return c;
+        if (change > 0 && typeof(max) === 'number' && newVal > max) return c;
         return newVal;
     }
 

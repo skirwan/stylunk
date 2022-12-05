@@ -22,6 +22,10 @@ export class StyleColor implements Color {
         
         return ((5 - this.r) * 6 + (5 - this.g)) * 6 + (5 - this.b);
     }
+
+    toString(): string {
+        return `${this.r}${this.g}${this.b}`;
+    }
 }
 
 export type ColorComponent = ('r' | 'g' | 'b') & keyof StyleColor;

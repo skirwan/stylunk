@@ -17,3 +17,39 @@ test('basic dye logic santiy', () => {
     expect(q.toString()).not.toStrictEqual(q2.toString());
     expect(differentItemColors(q.colors, q2.colors)).toBeFalsy();
 });
+
+test('albino maha lila bleach', () => {
+    let maha = makeShirt('Albino Maha Fur', '222', '333', '444');
+
+    let lilaBleach = Berries[0]!.actions['bleach']!;
+
+    let result = maha.applying(lilaBleach);
+    
+    expect(result.colors[0].color.toString()).toBe('233');
+    expect(result.colors[1].color.toString()).toBe('333');
+    expect(result.colors[2].color.toString()).toBe('444');
+});
+
+test('albino maha double lila bleach', () => {
+    let maha = makeShirt('Albino Maha Fur', '222', '333', '444');
+
+    let lilaBleach = Berries[0]!.actions['bleach']!;
+
+    let result = maha.applying(lilaBleach).applying(lilaBleach);
+    
+    expect(result.colors[0].color.toString()).toBe('244');
+    expect(result.colors[1].color.toString()).toBe('333');
+    expect(result.colors[2].color.toString()).toBe('444');
+});
+
+test('albino maha lila dye', () => {
+    let maha = makeShirt('Albino Maha Fur', '222', '333', '444');
+
+    let lilaDye = Berries[0]!.actions['dye']!;
+
+    let result = maha.applying(lilaDye);
+    
+    expect(result.colors[0].color.toString()).toBe('222');
+    expect(result.colors[1].color.toString()).toBe('233');
+    expect(result.colors[2].color.toString()).toBe('344');
+});
