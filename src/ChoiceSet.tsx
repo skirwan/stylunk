@@ -172,7 +172,7 @@ export class ChoiceSet extends Component<ChoiceSetProps> {
                         ];
                     })}
                 </ul>
-                {WardrobeRules[this.props.slot].colorable ? <BerryGrid {...this.props}></BerryGrid> : <></>}
+                {WardrobeRules[this.props.slot].colorable && !this.props.appearance.wornItems.shirt?.attributes.lockedColors ? <BerryGrid {...this.props}></BerryGrid> : <></>}
             </details>
         );
     }
